@@ -1,32 +1,24 @@
 "use client";
 
 import FormField from "@/components/FormField";
-import { signInSchema } from "@/validation/schemas/AuthSchema";
-import {
-  Box,
-  Flex,
-  Text,
-  FormLabel,
-  Checkbox,
-  Button,
-  Spinner,
-} from "@chakra-ui/react";
+import { signUpSchema } from "@/validation/schemas/AuthSchema";
+import { Box, Flex, Text, Button, Spinner } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
+import { emailSignup } from "@/app/actions/authAction";
+import PasswordField from "@/components/PasswordField";
 import { AppDispatch } from "@/utils/helpers/globalHelper";
 import { useDispatch } from "react-redux";
 import { showToastWithTimeout } from "@/redux/SharedSlice";
-import { emailSignIn } from "@/app/actions/authAction";
-import PasswordField from "@/components/PasswordField";
+import { useRouter } from "next/navigation";
 
-const SignInComponent = () => {
+const SignUpComponent = () => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
 
   const initialValues = {
+    userName: "",
     email: "",
     password: "",
-    rememberLoggedIn: false,
   };
 
   const onSubmitForm = async (
@@ -34,9 +26,9 @@ const SignInComponent = () => {
     // eslint-disable-next-line no-unused-vars
     setSubmitting: (data: boolean) => void
   ) => {
-    const response = await emailSignIn(values);
+    const response = await emailSignup(values);
     if (response.success) {
-      router.push("/admin/dashboard?tab=0&subtab=0");
+      router.push("/auth/confirm");
     } else {
       dispatch(
         showToastWithTimeout({
@@ -44,8 +36,8 @@ const SignInComponent = () => {
           status: "error",
         })
       );
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (
@@ -59,10 +51,10 @@ const SignInComponent = () => {
     >
       <Box w={"100%"}>
         <Text as={"h1"} fontWeight={"bold"} mb="10px" textAlign={"center"}>
-          Sign In
+          Sign Up
         </Text>
         <Text mb="3rem" as={"h4"}>
-          Enter your email and password to sign in!
+          Enter your email and password to sign Up!
         </Text>
       </Box>
       <Flex
@@ -80,10 +72,20 @@ const SignInComponent = () => {
           onSubmit={(form, { setSubmitting }) => {
             onSubmitForm(form, setSubmitting);
           }}
-          validationSchema={signInSchema}
+          validationSchema={signUpSchema}
         >
-          {({ values, errors, touched, isSubmitting, setFieldValue }: any) => (
+          {({ errors, touched, isSubmitting }: any) => (
             <Form>
+              <FormField
+                label="User Name*"
+                name="userName"
+                type="text"
+                placeholder="Name"
+                disabled={isSubmitting}
+                error={errors.userName}
+                touched={touched.userName}
+                styles={{ marginBottom: "1.5rem" }}
+              />
               <FormField
                 label="Email address*"
                 name="email"
@@ -103,28 +105,13 @@ const SignInComponent = () => {
                 touched={touched.password}
                 styles={{ marginBottom: "1.5rem" }}
               />
-              <Flex alignItems={"center"} mb="1.5rem">
-                <Checkbox
-                  id="rememberLoggedIn"
-                  name="rememberLoggedIn"
-                  disabled={isSubmitting}
-                  defaultChecked={values.rememberLoggedIn}
-                  onChange={(e) =>
-                    setFieldValue("rememberLoggedIn", e.target.checked)
-                  }
-                  me="10px"
-                />
-                <FormLabel htmlFor="rememberLoggedIn" mb="0">
-                  Keep me logged in
-                </FormLabel>
-              </Flex>
               <Button
                 type="submit"
                 variant="brand"
                 w="100%"
                 isDisabled={isSubmitting}
               >
-                Sign In {isSubmitting && <Spinner ml={"4"} />}
+                Sign Up {isSubmitting && <Spinner ml={"4"} />}
               </Button>
             </Form>
           )}
@@ -134,4 +121,4 @@ const SignInComponent = () => {
   );
 };
 
-export default SignInComponent;
+export default SignUpComponent;

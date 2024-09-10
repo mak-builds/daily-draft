@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 
-export const emailLogin = async (formData: any) => {
+export const emailSignIn = async (formData: any) => {
   const supabase = createClient();
   try {
     const { error } = await supabase.auth.signInWithPassword(formData);
@@ -19,28 +19,32 @@ export const emailLogin = async (formData: any) => {
   }
 };
 
-export const signOut = async () => {
+export const emailSignup = async (payload: any) => {
   const supabase = createClient();
-  await supabase.auth.signOut();
-  redirect("/auth/signin");
-};
+  const { email, password } = payload;
+  console.log("payload", payload);
 
-export const checkUserExistance = async (payload: any) => {
-  const supabase = createClient();
   try {
-    const { data, error } = await supabase
-      .from("users")
-      .select("id")
-      .eq("email_id", payload)
-      .eq("isAdmin", true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `/auth/callback`,
+      },
+    });
+    console.log("error", error);
 
-    console.log("data", data, "error", error);
-
-    if (error || data.length === 0) {
-      throw error || "User not found";
+    if (error) {
+      throw error.message;
     }
     return { success: true };
   } catch (error) {
     return { success: false, error };
   }
+};
+
+export const signOut = async () => {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  redirect("/auth/signin");
 };
