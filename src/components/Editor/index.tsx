@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Input } from "@chakra-ui/react";
 
 const QuillEditor = dynamic(() => import("react-quill"), {
   loading: () => <>Loading editor</>,
@@ -19,27 +19,21 @@ interface contentType {
 interface Properties {
   allowEmpty?: boolean;
   placeHolder?: string;
-  defaultContent: contentType;
-  handleEditorChange?: (content: string, text: string) => void;
-  handleParentChange?: (content: string, text: string) => void;
+  handleEditorChange?: (title: string, content: string, text: string) => void;
 }
 
 const Editor = ({
   placeHolder = "Text here",
   allowEmpty = true,
-  defaultContent,
   handleEditorChange,
-  handleParentChange,
 }: Properties) => {
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState({ text: "", html: "" });
-
-  useEffect(() => {
-    setContent(defaultContent);
-  }, []);
 
   const CustomButton = () => {
     const handleClick = () => {
-      if (handleEditorChange) handleEditorChange(content.html, content.text);
+      if (handleEditorChange)
+        handleEditorChange(title, content.html, content.text);
     };
     return <span onClick={handleClick}>Submit</span>;
   };
@@ -70,14 +64,16 @@ const Editor = ({
       .replace(/^\n/, "") // Remove a single newline at the start of the text
       .trim(); // Remove any leading or trailing whitespace
 
-    if (handleParentChange) {
-      handleParentChange(processedHtml, processedText);
-    }
     setContent({ html: processedHtml, text: processedText });
   };
 
+  const handleTitle = (data: any) => setTitle(data.target.value);
+
+  console.log(title, content);
+
   return (
     <Flex flexDir={"column"} maxH={"calc(100% - 220px)"}>
+      <Input onChange={handleTitle} />
       <QuillEditor
         value={content.html}
         onChange={handleChange}

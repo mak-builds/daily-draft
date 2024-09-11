@@ -72,6 +72,12 @@ export const sidebarTabs = [
       },
     ],
   },
+  {
+    id: 7,
+    label: "Draft",
+    icon: "MdContactPage",
+    href: "/admin/draft?tab=7",
+  },
 ];
 
 interface SidebarTab {

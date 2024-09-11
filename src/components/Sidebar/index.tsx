@@ -139,7 +139,7 @@ const SideBar = () => {
           textAlign={"center"}
           letterSpacing={".3rem"}
         >
-          Daill-Draft
+          Daily-Draft
         </Text>
       </Flex>
       <Divider />

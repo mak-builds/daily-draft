@@ -22,8 +22,6 @@ export const emailSignIn = async (formData: any) => {
 export const emailSignup = async (payload: any) => {
   const supabase = createClient();
   const { email, password } = payload;
-  console.log("payload", payload);
-
   try {
     const { error } = await supabase.auth.signUp({
       email,
@@ -32,7 +30,6 @@ export const emailSignup = async (payload: any) => {
         emailRedirectTo: `/auth/callback`,
       },
     });
-    console.log("error", error);
 
     if (error) {
       throw error.message;

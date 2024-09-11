@@ -35,6 +35,7 @@ const SignInComponent = () => {
     setSubmitting: (data: boolean) => void
   ) => {
     const response = await emailSignIn(values);
+
     if (response.success) {
       router.push("/admin/dashboard?tab=0&subtab=0");
     } else {
