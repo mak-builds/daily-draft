@@ -137,7 +137,6 @@ const SideBar = () => {
           as={"h3"}
           fontWeight={"bold"}
           textAlign={"center"}
-          letterSpacing={".3rem"}
         >
           Daily-Draft
         </Text>

@@ -69,7 +69,6 @@ const Editor = ({
 
   const handleTitle = (data: any) => setTitle(data.target.value);
 
-  console.log(title, content);
 
   return (
     <Flex flexDir={"column"} maxH={"calc(100% - 220px)"}>

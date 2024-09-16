@@ -12,25 +12,16 @@ import BreadCrumbComponent from "../Breadcrumb";
 import { signOut } from "@/app/actions/authAction";
 import { useState } from "react";
 import LogoutModal from "@/modals/LogoutModal";
-import ChangePasswordModal from "@/modals/ChangePasswordModal";
 
 const HeaderComponent = () => {
   const [logoutModal, setLogoutModal] = useState(false);
-  const [changePasswordModal, setChangePasswordModal] = useState(false);
 
   const handleConfirmLogout = () => {
     signOut();
     setLogoutModal(false);
   };
 
-  const handleConfirmPassword = () => {
-    // signOut();
-    setChangePasswordModal(false);
-  };
-
   const handleLogOut = () => setLogoutModal(true);
-
-  const handleChangePassword = () => setChangePasswordModal(true);
 
   return (
     <Flex
@@ -57,9 +48,6 @@ const HeaderComponent = () => {
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">
-            <MenuItem onClick={handleChangePassword}>
-              <Text as={"h6"}>Change Password</Text>
-            </MenuItem>
             <MenuItem color="red.400" onClick={handleLogOut}>
               <Text as={"h6"}>Log out</Text>
             </MenuItem>
@@ -70,12 +58,6 @@ const HeaderComponent = () => {
         <LogoutModal
           onClose={() => setLogoutModal(false)}
           onConfirm={handleConfirmLogout}
-        />
-      )}
-      {changePasswordModal && (
-        <ChangePasswordModal
-          onClose={() => setChangePasswordModal(false)}
-          onConfirm={handleConfirmPassword}
         />
       )}
     </Flex>

@@ -14,7 +14,6 @@ const DailyDraft = () => {
     html: string,
     text: string
   ) => {
-    console.log(title, html, text);
     const response = await createDraft({ title, html, text });
     if (response.success) {
       dispatch(

@@ -3,80 +3,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const sidebarTabs = [
   {
     id: 0,
-    label: "Dashboard",
-    icon: "MdHome",
-    href: "/admin/dashboard?tab=0",
-  },
-  {
-    id: 1,
-    label: "Users",
-    icon: "MdPerson",
-    href: "/admin/users?tab=1",
-  },
-  {
-    id: 2,
-    label: "Invitations",
-    icon: "MdInsertInvitation",
-    href: "/admin/invitation?tab=2",
-  },
-  {
-    id: 3,
-    label: "Communities",
-    icon: "IoIosPeople",
-    href: "/admin/community?tab=3",
-  },
-  {
-    id: 4,
-    label: "Posts",
-    icon: "RiPagesFill",
-    href: "/admin/posts?tab=4",
-  },
-  {
-    id: 5,
-    label: "Report",
-    icon: "FaFlag",
-    href: "/admin/report?tab=5",
-    subTabs: [
-      {
-        id: 0,
-        label: "Posts",
-        href: "/admin/report/posts?tab=5&subTab=Posts&subTabId=0",
-      },
-      {
-        id: 1,
-        label: "Users",
-        href: "/admin/report/users?tab=5&subTab=Users&subTabId=1",
-      },
-      {
-        id: 2,
-        label: "Comments",
-        href: "/admin/report/comments?tab=5&subTab=Comments&subTabId=2",
-      },
-    ],
-  },
-  {
-    id: 6,
     label: "Content",
     icon: "MdContactPage",
-    href: "/admin/content?tab=6",
+    href: "/admin/content?tab=0",
     subTabs: [
       {
         id: 0,
         label: "Terms and Condition",
-        href: "/admin/content/terms-condition?tab=6&subTabId=0",
+        href: "/admin/content/terms-condition?tab=0&subTabId=0",
       },
       {
         id: 1,
         label: "Privacy Policy",
-        href: "/admin/content/privacy-policy?tab=6&subTabId=1",
+        href: "/admin/content/privacy-policy?tab=0&subTabId=1",
       },
     ],
   },
   {
-    id: 7,
+    id: 1,
     label: "Draft",
     icon: "MdContactPage",
-    href: "/admin/draft?tab=7",
+    href: "/admin/draft?tab=1",
   },
 ];
 
